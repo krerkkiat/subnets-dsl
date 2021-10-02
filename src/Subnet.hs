@@ -9,6 +9,8 @@ module Subnet
     , possibleAddresses
     , broadcastAddress
     , availableHosts
+    , slashAddressToAddress
+    , slashAddressToBitCount
     ) where
 
 import Data.Bits
@@ -18,7 +20,11 @@ data Subnet = Subnet { networkAddress :: String
                      , netMaskBits :: Int
                      , hosts :: Int
                      , note :: String
-                     } deriving (Show, Read, Eq)
+                     }
+            | SubnetSlash { networkAddress :: String
+                          , hosts :: Int
+                          , note :: String
+                          } deriving (Show, Read, Eq)
 
 -- Taken from SO
 -- See https://stackoverflow.com/a/4981265/10163723
@@ -27,6 +33,14 @@ splitOn p s = case dropWhile p s of
   "" -> []
   s' -> w : splitOn p s''
         where (w, s'') = break p s'
+
+-- Proper type is String -> Option String
+slashAddressToAddress :: String -> String
+slashAddressToAddress addrS = head $ splitOn (=='/') addrS
+
+-- Proper type is String -> Option Int
+slashAddressToBitCount :: String -> Int
+slashAddressToBitCount addrS = read $ splitOn (=='/') addrS !! 1
 
 inetOp :: Word32 -> (Word32, Int) -> Word32
 inetOp old pair = uncurry shiftL pair .|. old
@@ -54,7 +68,8 @@ netMaskBitsToA n = part1 ++ "." ++ part2 ++ "." ++ part3 ++ "." ++ part4
                       part4 = show $ netMaskOp n .&. 255
 
 firstUsableAddress :: Subnet -> Word32
-firstUsableAddress subnet = inetAtoN (networkAddress subnet) + 1
+firstUsableAddress (Subnet addr _ _ _) = inetAtoN addr + 1
+firstUsableAddress (SubnetSlash addrS _ _) = let addr = slashAddressToAddress addrS in inetAtoN addr + 1
 
 lastUsableAddress :: Subnet -> Word32
 lastUsableAddress subnet = broadcastAddress subnet - 1
@@ -64,10 +79,10 @@ possibleAddresses :: Int -> Word32
 possibleAddresses mask = shiftL 1 (32 - mask)
 
 broadcastAddress :: Subnet -> Word32
-broadcastAddress subnet = addr + possibleAddresses (netMaskBits subnet) - 1
-                        where addr =  inetAtoN $ networkAddress subnet
+broadcastAddress (Subnet addr bitCount _ _) = inetAtoN addr + possibleAddresses bitCount - 1
+broadcastAddress (SubnetSlash addrS _ _) = addr + possibleAddresses bitCount - 1
+                                        where addr = inetAtoN $ slashAddressToAddress addrS
+                                              bitCount = slashAddressToBitCount addrS
 
 availableHosts :: Subnet -> Word32
 availableHosts subnet = 1 + (lastUsableAddress subnet - firstUsableAddress subnet)
-
-

@@ -13,18 +13,20 @@ import Subnet
 -- 4. Print last usable address
 -- 5. print broadcast address
 csvPrintSubnet :: Subnet -> IO ()
-csvPrintSubnet subnet = do
-  putStrLn $ part1 ++ ",Network," ++ part2 ++ "," ++ part3 ++ "," ++ part4 ++ ",/" ++ part5 ++ "," ++ note subnet
+csvPrintSubnet (SubnetSlash addrS hosts note) = csvPrintSubnet (Subnet addr bitCount hosts note)
+  where addr = slashAddressToAddress addrS
+        bitCount = slashAddressToBitCount addrS
+csvPrintSubnet subnet@(Subnet addr bitCount hosts note) = do
+  putStrLn $ addr ++ ",Network," ++ part2 ++ "," ++ part3 ++ "," ++ part4 ++ ",/" ++ part5 ++ "," ++ note
   putStrLn $ inetNtoA $ firstUsableAddress subnet
   putStrLn "|,Usable Range"
   putStrLn $ inetNtoA (lastUsableAddress subnet - 1)
   putStrLn $ inetNtoA (lastUsableAddress subnet) ++ ",Router"
   putStrLn $ inetNtoA (broadcastAddress subnet) ++ ",Broadcast"
-  where part1 = networkAddress subnet
-        part2 = show $ hosts subnet
+  where part2 = show $ hosts
         part3 = show $ availableHosts subnet
-        part4 = netMaskBitsToA $ netMaskBits subnet
-        part5 = show $ netMaskBits subnet
+        part4 = netMaskBitsToA $ bitCount
+        part5 = show $ bitCount
 
 csvPrintSubnets :: [Subnet] -> IO ()
 csvPrintSubnets = mapM_ csvPrintSubnet
