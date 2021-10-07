@@ -1,9 +1,9 @@
 module IP.Documentation
-  ( csvPrintSubnet
-  , csvPrintSubnets
+  ( printCsvSubnet
+  , printCsvSubnets
   ) where
 
-import Subnet
+import Data.Subnet
 
 -- 1. Print network line with: network address, string "Network,
 --    number of host expected, number of hosts available, netmask (dot notation),
@@ -12,11 +12,11 @@ import Subnet
 -- 3. Print a pipe with string "Usable Rage"
 -- 4. Print last usable address
 -- 5. print broadcast address
-csvPrintSubnet :: Subnet -> IO ()
-csvPrintSubnet (SubnetSlash addrS hosts note) = csvPrintSubnet (Subnet addr bitCount hosts note)
+printCsvSubnet :: Subnet -> IO ()
+printCsvSubnet (SubnetSlash addrS hosts note) = printCsvSubnet (Subnet addr bitCount hosts note)
   where addr = slashAddressToAddress addrS
         bitCount = slashAddressToBitCount addrS
-csvPrintSubnet subnet@(Subnet addr bitCount hosts note) = do
+printCsvSubnet subnet@(Subnet addr bitCount hosts note) = do
   putStrLn $ addr ++ ",Network," ++ part2 ++ "," ++ part3 ++ "," ++ part4 ++ ",/" ++ part5 ++ "," ++ note
   putStrLn $ inetNtoA $ firstUsableAddress subnet
   putStrLn "|,Usable Range"
@@ -28,5 +28,6 @@ csvPrintSubnet subnet@(Subnet addr bitCount hosts note) = do
         part4 = netMaskBitsToA $ bitCount
         part5 = show $ bitCount
 
-csvPrintSubnets :: [Subnet] -> IO ()
-csvPrintSubnets = mapM_ csvPrintSubnet
+-- TODO Double check that the subnets cover a specific range.
+printCsvSubnets :: [Subnet] -> IO ()
+printCsvSubnets = mapM_ printCsvSubnet

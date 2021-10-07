@@ -1,4 +1,4 @@
-module Subnet
+module Data.Subnet
     ( Subnet (..)
     , splitOn
     , inetNtoA
@@ -11,11 +11,14 @@ module Subnet
     , availableHosts
     , slashAddressToAddress
     , slashAddressToBitCount
+    , networkAddressAndSlashMask
     ) where
 
 import Data.Bits
 import Data.Word
 
+-- TODO Add SubnetRanges where range can be specified for the Subnet
+--      It may look better to have function that can print range within the subnet.
 data Subnet = Subnet { networkAddress :: String
                      , netMaskBits :: Int
                      , hosts :: Int
@@ -86,3 +89,7 @@ broadcastAddress (SubnetSlash addrS _ _) = addr + possibleAddresses bitCount - 1
 
 availableHosts :: Subnet -> Word32
 availableHosts subnet = 1 + (lastUsableAddress subnet - firstUsableAddress subnet)
+
+networkAddressAndSlashMask :: Subnet -> String
+networkAddressAndSlashMask (Subnet addr mask _ _) = addr ++ "/" ++ (show mask)
+networkAddressAndSlashMask (SubnetSlash addrS _ _) = addrS

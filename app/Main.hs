@@ -1,6 +1,6 @@
 module Main where
 
-import Subnet
+import Data.Subnet
 import IP.Documentation
 import Diagram.Drawio
 

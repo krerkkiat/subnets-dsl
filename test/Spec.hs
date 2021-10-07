@@ -1,5 +1,5 @@
 import Test.Hspec
-import Subnet
+import Data.Subnet
 
 main :: IO ()
 main = hspec $ do
