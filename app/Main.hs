@@ -2,8 +2,11 @@ module Main where
 
 import Subnet
 import IP.Documentation
+import Diagram.Drawio
 
-subnet = Subnet "192.168.0.0" 24 0 "Home network"
+subnets = [ Subnet "172.18.128.0" 20 2000 "Wireless"
+          , Subnet "172.18.144.0" 22 600 "Technical"
+          ]
 
 main :: IO ()
-main = csvPrintSubnet subnet
+main = printCsvSubnets subnets
