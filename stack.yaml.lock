@@ -11,6 +11,34 @@ packages:
       sha256: c67dad42129f684b8d21deb0d2948d88618a287fe6a7ae235a232959bfe313df
   original:
     hackage: hspec-2.7.10
+- completed:
+    hackage: xml-conduit-1.9.1.1@sha256:7213a64462d669f5ca55534a78a9b19c1d3757a605756e1f5065fa7c611493c1,3010
+    pantry-tree:
+      size: 836
+      sha256: f1d88705f6f5368a5861251f5b32f59374a2aaa979079fb8a128bd15f830da75
+  original:
+    hackage: xml-conduit-1.9.1.1
+- completed:
+    hackage: xml-hamlet-0.5.0.1@sha256:4d89eee32742b2e8848517dfc27994466c9b9de02580fd80684a3c3ea1d223a7,1516
+    pantry-tree:
+      size: 432
+      sha256: ff0b64f3a2b159102ffc00633730648e7403531e60a0edb2f0bef24658d3260e
+  original:
+    hackage: xml-hamlet-0.5.0.1
+- completed:
+    hackage: text-1.2.4.1@sha256:e12b468008b3c2bbc1f39bd2dcb75ba8f563c65aa5e54ee223b76463a845b6f1,7184
+    pantry-tree:
+      size: 7720
+      sha256: b1fd81329340a9c6eea4e78313d36c6a333a5de6032ec1536ff6c70a4300b46c
+  original:
+    hackage: text-1.2.4.1
+- completed:
+    hackage: containers-0.6.5.1@sha256:a029734132bb3471f8a91e3deaa095581a97410c405a1c665643053db87d87c1,2596
+    pantry-tree:
+      size: 2823
+      sha256: 86234e3221f6fa50e82d860a8428005ac3ff19fea92103ff79a3047cd5cd1625
+  original:
+    hackage: containers-0.6.5.1
 snapshots:
 - completed:
     size: 586041

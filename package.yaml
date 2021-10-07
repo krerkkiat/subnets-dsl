@@ -19,8 +19,16 @@ extra-source-files:
 # common to point users to the README.md file.
 description:         Please see the README on GitHub at <https://github.com/krerkkiat/subnets-dsl#readme>
 
+default-extensions:
+  - OverloadedStrings
+  - QuasiQuotes
+
 dependencies:
 - base >= 4.7 && < 5
+- xml-conduit
+- xml-hamlet
+- text
+- containers
 
 library:
   source-dirs: src

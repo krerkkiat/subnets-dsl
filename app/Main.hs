@@ -9,4 +9,6 @@ subnets = [ Subnet "172.18.128.0" 20 2000 "Wireless"
           ]
 
 main :: IO ()
-main = printCsvSubnets subnets
+main = do
+  printCsvSubnets subnets
+  writeDrawio subnets

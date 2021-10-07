@@ -25,14 +25,22 @@ source-repository head
 
 library
   exposed-modules:
+      Data.Subnet
+      Diagram.Drawio
       IP.Documentation
-      Subnet
   other-modules:
       Paths_subnets_dsl
   hs-source-dirs:
       src
+  default-extensions:
+      OverloadedStrings
+      QuasiQuotes
   build-depends:
       base >=4.7 && <5
+    , containers
+    , text
+    , xml-conduit
+    , xml-hamlet
   default-language: Haskell2010
 
 executable subnets-dsl-exe
@@ -41,10 +49,17 @@ executable subnets-dsl-exe
       Paths_subnets_dsl
   hs-source-dirs:
       app
+  default-extensions:
+      OverloadedStrings
+      QuasiQuotes
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , containers
     , subnets-dsl
+    , text
+    , xml-conduit
+    , xml-hamlet
   default-language: Haskell2010
 
 test-suite subnets-dsl-test
@@ -54,10 +69,17 @@ test-suite subnets-dsl-test
       Paths_subnets_dsl
   hs-source-dirs:
       test
+  default-extensions:
+      OverloadedStrings
+      QuasiQuotes
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , containers
     , hspec
     , hspec-contrib
     , subnets-dsl
+    , text
+    , xml-conduit
+    , xml-hamlet
   default-language: Haskell2010
