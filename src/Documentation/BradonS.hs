@@ -1,4 +1,4 @@
-module IP.Documentation
+module Documentation.BradonS
   ( printCsvSubnet
   , printCsvSubnets
   ) where

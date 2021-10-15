@@ -27,7 +27,7 @@ library
   exposed-modules:
       Data.Subnet
       Diagram.Drawio
-      IP.Documentation
+      Documentation.BradonS
   other-modules:
       Paths_subnets_dsl
   hs-source-dirs:

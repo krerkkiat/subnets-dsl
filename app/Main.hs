@@ -1,7 +1,7 @@
 module Main where
 
 import Data.Subnet
-import IP.Documentation
+import Documentation.BradonS
 import Diagram.Drawio
 
 subnets = [ Subnet "172.18.128.0" 20 2000 "Wireless"
