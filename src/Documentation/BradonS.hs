@@ -1,3 +1,13 @@
+{-|
+Module : Documentation.BradonS
+Description : Instructor Brandon Saunders's style of IP documentation
+Copyright : (c) Krerkkiat Chusap, 2021
+License : BSD-3-Clause License
+
+The module aims to produce a CSV data that can be imported
+into spread sheet program to have the style of IP documentation
+that instructor Brandon Saunders is looking for.
+-}
 module Documentation.BradonS
   ( printCsvSubnet
   , printCsvSubnets

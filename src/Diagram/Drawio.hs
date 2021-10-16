@@ -37,6 +37,9 @@ mxGraphModelAttributes = M.fromList
   , ("shadow", "0")
   ]
 
+mxCellDefaultStyle :: String
+mxCellDefaultStyle = "text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;"
+
 -- TODO Actually randomly generate the string.
 genPrefix = "S7n_AQlkfD6dSjdseuGR"
 
@@ -45,10 +48,12 @@ data Cell = Cell { prefix :: String
                  , subnet :: Subnet
                  } deriving (Show, Eq)
 
+-- Wrap a subnet into a Cell data type.
 prepareCell :: [Subnet] -> [Cell]
 prepareCell subnets = [Cell p i s | (p, i, s) <- zip3 (repeat genPrefix) [1..] subnets]
 
 -- FIXME or rather IMPOVE ME
+-- There are duplication in the two cases.
 writeDrawio :: [Subnet] -> IO ()
 writeDrawio [] = writeFile def "subnets.xml" $ Document (Prologue [] Nothing []) root []
   where
@@ -79,6 +84,6 @@ createId p i = p ++ "-" ++ (show i)
 -- id format: <prefix>-<index>
 subnetNodes :: Cell -> [Node]
 subnetNodes (Cell p i s) = [xml|
-<mxCell id=#{pack $ createId p i} value="<div>NET #{pack $ networkAddressAndSlashMask s}</div><div>GW #{pack $ inetNtoA (lastUsableAddress s)}</div>" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex=1 parent=1>
+<mxCell id=#{pack $ createId p i} value="<div>NET #{pack $ networkAddressAndSlashMask s}</div><div>GW #{pack $ inetNtoA (lastUsableAddress s)}</div>" style=#{pack mxCellDefaultStyle} vertex=1 parent=1>
     <mxGeometry width=150 height=30 as=geometry>
 |]

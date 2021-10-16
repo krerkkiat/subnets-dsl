@@ -12,6 +12,7 @@ module Data.Subnet
     , slashAddressToAddress
     , slashAddressToBitCount
     , networkAddressAndSlashMask
+    , canGrowBy
     ) where
 
 import Data.Bits
@@ -93,3 +94,9 @@ availableHosts subnet = 1 + (lastUsableAddress subnet - firstUsableAddress subne
 networkAddressAndSlashMask :: Subnet -> String
 networkAddressAndSlashMask (Subnet addr mask _ _) = addr ++ "/" ++ (show mask)
 networkAddressAndSlashMask (SubnetSlash addrS _ _) = addrS
+
+-- Ensure that subnet can be expanded by an arbitary percentage.
+-- Substract one from the avaiableHost because we need one for the default gateway.
+canGrowBy :: Float -> Subnet -> Bool
+canGrowBy percent subnet = h * (1 + percent) <= (fromIntegral $ availableHosts subnet - 1)
+  where h = fromIntegral (hosts subnet) :: Float
