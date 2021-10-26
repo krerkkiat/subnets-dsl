@@ -29,6 +29,7 @@ dependencies:
 - xml-hamlet
 - text
 - containers
+- sort
 
 library:
   source-dirs: src

@@ -28,7 +28,19 @@ data Subnet = Subnet { networkAddress :: String
             | SubnetSlash { networkAddress :: String
                           , hosts :: Int
                           , note :: String
-                          } deriving (Show, Read, Eq)
+                          } deriving (Show, Read)
+
+instance Eq Subnet where
+  (==) (Subnet addr1 _ _ _) (Subnet addr2 _ _ _) = (inetAtoN addr1) == (inetAtoN addr2)
+  (==) (SubnetSlash addrS1 _ _) (SubnetSlash addrS2 _ _) = (inetAtoN addr1) == (inetAtoN addr2)
+                                                             where addr1 = slashAddressToAddress addrS1
+                                                                   addr2 = slashAddressToAddress addrS2
+
+instance Ord Subnet where
+  compare (Subnet addr1 _ _ _) (Subnet addr2 _ _ _) = compare (inetAtoN addr1) (inetAtoN addr2)
+  compare (SubnetSlash addrS1 _ _) (SubnetSlash addrS2 _ _) = compare (inetAtoN addr1) (inetAtoN addr2)
+                                                              where addr1 = slashAddressToAddress addrS1
+                                                                    addr2 = slashAddressToAddress addrS2
 
 -- Taken from SO
 -- See https://stackoverflow.com/a/4981265/10163723

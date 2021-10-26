@@ -13,6 +13,7 @@ module Documentation.BradonS
   , printCsvSubnets
   ) where
 
+import Data.Sort
 import Data.Subnet
 
 -- 1. Print network line with: network address, string "Network,
@@ -40,4 +41,4 @@ printCsvSubnet subnet@(Subnet addr bitCount hosts note) = do
 
 -- TODO Double check that the subnets cover a specific range.
 printCsvSubnets :: [Subnet] -> IO ()
-printCsvSubnets = mapM_ printCsvSubnet
+printCsvSubnets = (mapM_ printCsvSubnet) . sort

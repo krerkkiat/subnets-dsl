@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      Data.Recipe
       Data.Subnet
       Diagram.Drawio
       Documentation.BradonS
@@ -38,6 +39,7 @@ library
   build-depends:
       base >=4.7 && <5
     , containers
+    , sort
     , text
     , xml-conduit
     , xml-hamlet
@@ -56,6 +58,7 @@ executable subnets-dsl-exe
   build-depends:
       base >=4.7 && <5
     , containers
+    , sort
     , subnets-dsl
     , text
     , xml-conduit
@@ -78,6 +81,7 @@ test-suite subnets-dsl-test
     , containers
     , hspec
     , hspec-contrib
+    , sort
     , subnets-dsl
     , text
     , xml-conduit
